@@ -3,9 +3,9 @@
 
 # NOTE: Edit these to the correct values for your setup.
 
-AuthorizedKeysCommand /usr/libexec/phabricator-ssh-hook.sh
-AuthorizedKeysCommandUser vcs-user
-AllowUsers vcs-user
+AuthorizedKeysCommand /etc/phabricator-ssh/phabricator-ssh-hook.sh
+AuthorizedKeysCommandUser hg
+#AllowUsers hg
 
 # You may need to tweak these options, but mostly they just turn off everything
 # dangerous.
@@ -20,4 +20,4 @@ PrintLastLog no
 PasswordAuthentication no
 AuthorizedKeysFile none
 
-PidFile /var/run/sshd-phabricator.pid
+PidFile /run/sshd-phabricator.pid
