@@ -4,7 +4,10 @@ MAINTAINER Alejandro Baez
 
 RUN apt-get update; apt-get install -yq ssh openssh-server curl vim less mercurial git
 
-RUN apt-get -yq install php5-curl php5-cli php5-mysql php5-dev php5-gd php5-pear php5-apc php5-json php5-mbstring
+RUN apt-get -yq install php5-curl php5-cli php5-mysql php5-pear php5-apc php5-mbstring php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json
+
+RUN a2enmod rewrite
+
 
 # ports for ssh (2244 for regular SSH, 22 for hg)
 EXPOSE 2244 22
@@ -38,3 +41,4 @@ RUN echo "Port 2244" >> /etc/ssh/sshd_config
 ADD ./add/sshd_config.phabricator /etc/phabricator-ssh/sshd_config.phabricator
 ADD ./add/phabricator-ssh-hook.sh /etc/phabricator-ssh/phabricator-ssh-hook.sh
 RUN chown root:root /etc/phabricator-ssh -R
+
