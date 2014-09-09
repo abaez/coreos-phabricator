@@ -34,3 +34,7 @@ WORKDIR /
 # Move the default SSH to port 2244
 RUN echo "Port 2244" >> /etc/ssh/sshd_config
 
+# Configure SSH for phabricator
+ADD ./add/sshd_config.phabricator /etc/phabricator-ssh/sshd_config.phabricator
+ADD ./add/phabricator-ssh-hook.sh /etc/phabricator-ssh/phabricator-ssh-hook.sh
+RUN chown root:root /etc/phabricator-ssh -R
