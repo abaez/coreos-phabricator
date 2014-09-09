@@ -2,11 +2,16 @@ FROM tutum/apache-php
 
 MAINTAINER Alejandro Baez
 
-RUN apt-get update; apt-get install -yq ssh openssh-server curl vim less mercurial git
+RUN rm /var/www/html /app -rf
+RUN rm /etc/apache2/sites-enabled/*conf 
+
+RUN apt-get update; apt-get install -yq ssh openssh-server curl vim less mercurial git supervisor apache2-mpm-itk
 
 RUN apt-get -yq install php5-curl php5-cli php5-mysql php5-pear php5-apc php5-mbstring php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json
 
 RUN a2enmod rewrite
+
+RUN service supervisor restart
 
 
 # ports for ssh (2244 for regular SSH, 22 for hg)
@@ -42,3 +47,11 @@ ADD ./add/sshd_config.phabricator /etc/phabricator-ssh/sshd_config.phabricator
 ADD ./add/phabricator-ssh-hook.sh /etc/phabricator-ssh/phabricator-ssh-hook.sh
 RUN chown root:root /etc/phabricator-ssh -R
 
+# The great addition
+ADD ./add/supervisord.conf /etc/supervisor/confg.d/ 
+ADD ./add/phabricator.conf 
+
+RUN supervisorctl reread; supervisorctl update
+
+WORKDIR /srv/phabricator
+CMD ["/usr/bin/supervisord"]
