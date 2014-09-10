@@ -41,6 +41,7 @@ RUN echo "Port 2244" >> /etc/ssh/sshd_config
 ADD add/sshd_config.phabricator /etc/phabricator-ssh/sshd_config.phabricator
 ADD add/phabricator-ssh-hook.sh /etc/phabricator-ssh/phabricator-ssh-hook.sh
 RUN chown root:root /etc/phabricator-ssh -R
+RUN mkdir -p /var/run/sshd
 
 # The configuring apache for phabricator
 RUN rm /var/www/html /app -rf
