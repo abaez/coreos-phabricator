@@ -49,7 +49,7 @@ ADD add/phabricator.conf /etc/apache2/sites-enabled/phabricator.conf
 
 
 # setting up supervisord
-ADD add/supervisord.conf /etc/supervisor/confg.d/supervisord.conf
+ADD add/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN mkdir -p /var/log/supervisor
 RUN a2enmod rewrite
 #RUN service supervisor restart
