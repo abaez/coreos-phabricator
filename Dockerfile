@@ -20,9 +20,10 @@ EXPOSE 843 22280
 
 # Adding user
 RUN echo "hg:x:2000:2000:user for phabricator:/srv:/bin/bash" >> /etc/passwd
+RUN echo "phabricator:x:2001:2000:user for phabricator daemons:/srv:/bin/bash" >> /etc/passwd
 RUN echo "www-phabricator:!:2000:www-data" >> /etc/group
 
-#RUN echo "hg ALL=(www-data) SETENV: NOPASSWD: /usr/bin/hg" >>  /etc/sudoers.d/hg
+RUN echo "hg ALL=(phabricator) SETENV: NOPASSWD: /usr/bin/hg" >>  /etc/sudoers.d/hg
 
 # set up phabricator
 RUN chown hg:www-phabricator /srv
@@ -38,10 +39,12 @@ WORKDIR /
 RUN echo "Port 2244" >> /etc/ssh/sshd_config
 
 # Configure SSH for phabricator
+RUN mkdir /etc/phabricator-ssh
+RUN mkdir /var/run/sshd
+RUN chmod 0755 /var/run/sshd
 ADD add/sshd_config.phabricator /etc/phabricator-ssh/sshd_config.phabricator
 ADD add/phabricator-ssh-hook.sh /etc/phabricator-ssh/phabricator-ssh-hook.sh
 RUN chown root:root /etc/phabricator-ssh -R
-RUN mkdir -p /var/run/sshd
 
 # The configuring apache for phabricator
 RUN rm /var/www/html /app -rf
@@ -61,6 +64,9 @@ RUN a2enmod rewrite
 # making default directories
 RUN mkdir -p /var/lib/mysql
 RUN mkdir -p /var/repo
+RUN chown phabricator:2000 /var/repo
+RUN mkdir -p /var/tmp/phd/pid
+RUN chmod 0777 /var/tmp/phd/pid
 RUN mkdir /config
 
 # Clean packages 
