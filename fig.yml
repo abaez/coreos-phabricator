@@ -5,12 +5,13 @@ db:
   environment:
     - MARIADB_PASS=somepass
   ports:
-    - "3306:3306"
+    - "3306"
 
 web:
   build: .
   volumes:
     - /var/repo
+    - ./config:/config
   volumes_from:
     - db
   ports:

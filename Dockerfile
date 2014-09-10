@@ -51,6 +51,8 @@ ADD add/phabricator.conf /etc/apache2/sites-enabled/phabricator.conf
 
 # setting up supervisord
 ADD add/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD add/bootup.sh /etc/init.d/bootup.sh
+RUN chmod +rwx /etc/init.d/bootup.sh
 RUN mkdir -p /var/log/supervisor
 RUN a2enmod rewrite
 #RUN service supervisor restart
@@ -59,6 +61,7 @@ RUN a2enmod rewrite
 # making default directories
 RUN mkdir -p /var/lib/mysql
 RUN mkdir -p /var/repo
+RUN mkdir /config
 
 # Clean packages 
 RUN apt-get clean
