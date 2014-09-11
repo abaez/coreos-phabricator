@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends ssh openssh-server apache2 curl mercurial git supervisor vim.tiny ca-certificates nodejs
 
 # Installing required php packages
-RUN apt-get -y install --no-install-recommends php5-curl php5-cli php5-mysql php-pear php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json libapache2-mod-php5
+RUN apt-get -y install --no-install-recommends php5 php5-curl php5-mcrypt php5-cgi php5-cli php5-mysql php-pear php5-gd php5-dev php-apc php5-json libapache2-mod-php5 php5-ldap
 
 # User access on apache
 RUN apt-get -y install --no-install-recommends apache2-mpm-itk 
@@ -56,8 +56,8 @@ RUN chown root:root /etc/phabricator-ssh -R
 # The configuring apache for phabricator
 RUN rm /var/www/html -rf
 RUN rm /etc/apache2/sites-enabled/000-default.conf 
-ADD add/phabricator.conf /etc/apache2/sites-enabled/phabricator.conf
-
+ADD add/phabricator.conf /etc/apache2/sites-available/phabricator.conf
+RUN ln -s /etc/apache2/sites-available/phabricator.conf /etc/apache2/sites-enabled/phabricator.conf
 
 # setting up supervisord
 ADD add/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

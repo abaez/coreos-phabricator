@@ -13,6 +13,6 @@ web:
     - /var/repo
     - /data/Downloads/tmp/config:/config
   ports:
-    - "1234:80"
+    - "80:80"
   links:
     - db
