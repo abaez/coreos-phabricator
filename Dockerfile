@@ -54,8 +54,6 @@ ADD add/phabricator.conf /etc/apache2/sites-enabled/phabricator.conf
 
 # setting up supervisord
 ADD add/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD add/bootup.sh /etc/init.d/bootup.sh
-RUN chmod +rwx /etc/init.d/bootup.sh
 RUN mkdir -p /var/log/supervisor
 RUN a2enmod rewrite
 #RUN service supervisor restart
@@ -74,5 +72,9 @@ RUN apt-get clean
 
 VOLUME /srv/phabricator/conf/local
 
+# Setting up bootup
+ADD add/bootup.sh /srv/bootup.sh
+RUN chmod +rwx /srv/bootup.sh
+
 WORKDIR /srv/phabricator
-CMD ["/usr/bin/supervisord"]
+CMD ["/srv/bootup.sh && /usr/bin/supervisord"]

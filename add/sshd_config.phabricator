@@ -5,7 +5,7 @@
 
 AuthorizedKeysCommand /etc/phabricator-ssh/phabricator-ssh-hook.sh
 AuthorizedKeysCommandUser hg
-#AllowUsers hg
+AllowUsers hg
 
 # You may need to tweak these options, but mostly they just turn off everything
 # dangerous.
