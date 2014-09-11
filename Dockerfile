@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ssh openssh-ser
 RUN apt-get -y install --no-install-recommends php5 php5-curl php5-mcrypt php5-cgi php5-cli php5-mysql php-pear php5-gd php5-dev php-apc php5-json 
 
 # nginx stuff
-RUN apt-get install -y --no-install-recommends nginx php5-fpm
+RUN apt-get install -y --no-install-recommends nginx nginx-core nginx-common php5-fpm
 
 # Clean packages 
 RUN apt-get clean
