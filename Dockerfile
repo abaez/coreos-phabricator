@@ -49,18 +49,18 @@ RUN echo "Port 2244" >> /etc/ssh/sshd_config
 RUN mkdir /etc/phabricator-ssh
 RUN mkdir /var/run/sshd
 RUN chmod 0755 /var/run/sshd
-ADD add/sshd_config.phabricator /etc/phabricator-ssh/sshd_config.phabricator
-ADD add/phabricator-ssh-hook.sh /etc/phabricator-ssh/phabricator-ssh-hook.sh
+ADD add/sshd_config.phabricator /etc/phabricator-ssh/
+ADD add/phabricator-ssh-hook.sh /etc/phabricator-ssh/
 RUN chown root:root /etc/phabricator-ssh -R
 
 # configure nginx
 RUN rm /etc/nginx/nginx.conf
-ADD add/nginx.conf /etc/nginx/nginx.conf
-ADD add/fastcgi.conf /etc/nginx/fastcgi.conf
-ADD add/phabricator-fpm.conf /etc/php5/fpm/pool.d/phabricator-fpm.conf
+ADD add/nginx.conf /etc/nginx/
+ADD add/fastcgi.conf /etc/nginx/
+ADD add/phabricator-fpm.conf /etc/php5/fpm/pool.d/
 
 # setting up supervisord
-ADD add/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD add/sv/ /etc/supervisor/conf.d/
 RUN mkdir -p /var/log/supervisor
 
 # making default directories
