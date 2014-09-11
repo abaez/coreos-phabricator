@@ -77,4 +77,4 @@ ADD add/bootup.sh /srv/bootup.sh
 RUN chmod +rwx /srv/bootup.sh
 
 WORKDIR /srv/phabricator
-CMD ["/srv/bootup.sh && /usr/bin/supervisord"]
+CMD ["/srv/bootup.sh"]

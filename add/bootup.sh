@@ -25,7 +25,17 @@ else
     exit 1
 fi
 
+./bin/config set phd.user phabricator
+./bin/config set diffusion.ssh-user hg
+
 popd
+
+if [ -e /config/authorized_keys ]; then
+    echo "Copying authorized_keys file into place"
+    mkdir -p /root/.ssh/
+    cp /config/authorized_keys /root/.ssh/
+    chmod 600 /root/.ssh/authorized_keys
+fi
 
 echo "Upgrading Phabricator..."
 
@@ -58,3 +68,5 @@ fi
 
 popd
 
+
+/usr/bin/supervisord
