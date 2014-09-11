@@ -1,12 +1,13 @@
-FROM tutum/apache-php
+FROM ubuntu:trusty
 
 MAINTAINER Alejandro Baez
 
 # Installing required packages
-RUN apt-get update && apt-get install -y ssh openssh-server curl vim less mercurial git supervisor apache2-mpm-itk
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get install -y ssh openssh-server apache2 curl vim less mercurial git supervisor apache2-mpm-itk 
 
 # Installing required php packages
-RUN apt-get -y install php5-curl php5-cli php5-mysql php-pear php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json
+RUN apt-get -y install php5-curl php5-cli php5-mysql php-pear php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json libapache2-mod-php5
 
 
 # ports for ssh (2244 for regular SSH, 22 for hg)
@@ -47,7 +48,7 @@ ADD add/phabricator-ssh-hook.sh /etc/phabricator-ssh/phabricator-ssh-hook.sh
 RUN chown root:root /etc/phabricator-ssh -R
 
 # The configuring apache for phabricator
-RUN rm /var/www/html /app -rf
+RUN rm /var/www/html -rf
 RUN rm /etc/apache2/sites-enabled/000-default.conf 
 ADD add/phabricator.conf /etc/apache2/sites-enabled/phabricator.conf
 
