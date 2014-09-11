@@ -4,7 +4,7 @@ MAINTAINER Alejandro Baez
 
 # Installing required packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends openssh-server apache2 curl mercurial git supervisor vim.tiny ca-certificates
+RUN apt-get update && apt-get install -y --no-install-recommends ssh openssh-server apache2 curl mercurial git supervisor vim.tiny ca-certificates nodejs
 
 # Installing required php packages
 RUN apt-get -y install --no-install-recommends php5-curl php5-cli php5-mysql php-pear php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json libapache2-mod-php5
@@ -76,9 +76,9 @@ RUN mkdir /config
 
 VOLUME /srv/phabricator/conf/local
 
-# Setting up bootup
-ADD add/bootup.sh /srv/bootup.sh
-RUN chmod +rwx /srv/bootup.sh
+# Setting up startup
+ADD add/startup.sh /srv/startup.sh
+RUN chmod +rwx /srv/startup.sh
 
 WORKDIR /srv/phabricator
-CMD ["/srv/bootup.sh"]
+CMD ["/srv/startup.sh"]

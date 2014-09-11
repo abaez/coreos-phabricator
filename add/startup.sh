@@ -68,5 +68,8 @@ fi
 
 popd
 
+# Check to make sure the notification services are running
+echo "Restarting aphlict"
+/srv/phabricator/bin/aphlict restart
 
 /usr/bin/supervisord
