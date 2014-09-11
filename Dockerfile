@@ -4,11 +4,17 @@ MAINTAINER Alejandro Baez
 
 # Installing required packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y ssh openssh-server apache2 curl vim less mercurial git supervisor apache2-mpm-itk 
+RUN apt-get update && apt-get install -y --no-install-recommends openssh-server apache2 curl mercurial git supervisor vim.tiny ca-certificates
 
 # Installing required php packages
-RUN apt-get -y install php5-curl php5-cli php5-mysql php-pear php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json libapache2-mod-php5
+RUN apt-get -y install --no-install-recommends php5-curl php5-cli php5-mysql php-pear php5-mysql php5-gd php5-dev php5-curl php-apc php5-cli php5-json libapache2-mod-php5
 
+# User access on apache
+RUN apt-get -y install --no-install-recommends apache2-mpm-itk 
+
+# Clean packages 
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 # ports for ssh (2244 for regular SSH, 22 for hg)
 EXPOSE 2244 22
@@ -67,9 +73,6 @@ RUN chown phabricator:2000 /var/repo
 RUN mkdir -p /var/tmp/phd/pid
 RUN chmod 0777 /var/tmp/phd/pid
 RUN mkdir /config
-
-# Clean packages 
-RUN apt-get clean
 
 VOLUME /srv/phabricator/conf/local
 
