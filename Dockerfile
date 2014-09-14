@@ -81,4 +81,4 @@ ADD add/startup.sh /srv/startup.sh
 RUN chmod +rwx /srv/startup.sh
 
 WORKDIR /srv/phabricator
-CMD ["/srv/startup.sh"]
+CMD ["/usr/bin/supervisord"]

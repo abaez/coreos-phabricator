@@ -72,4 +72,5 @@ popd
 echo "Restarting aphlict"
 /srv/phabricator/bin/aphlict restart
 
-/usr/bin/supervisord
+/srv/phabricator/bin/phd restart
+
