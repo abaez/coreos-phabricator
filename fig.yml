@@ -1,9 +1,9 @@
 db:
-  image: tutum/mariadb
+  image: tutum/mysql
   volumes:
     - /data/Downloads/tmp/mdb:/var/lib/mysql
   environment:
-    - MARIADB_PASS=somepass
+    - MYSQL_PASS=somepass
   ports:
     - "3306"
 
@@ -12,6 +12,8 @@ web:
   volumes:
     - /var/repo
     - /data/Downloads/tmp/config:/config
+  volumes_from:
+    - db
   ports:
     - "1234:80"
   links:
