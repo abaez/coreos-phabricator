@@ -15,13 +15,13 @@ EnvironmentFile=/etc/environment
 ExecStart=/bin/sh -c "while true; do \
     curl -f ${COREOS_PRIVATE_IPV4}; \
     if [ $? -eq 0 ]; then \
-      etcdctl set /announce/services/db/${COREOS_PRIVATE_IPV4} '${COREOS_PRIVATE_IPV4}' --ttl 30; \
+      etcdctl set /db/${COREOS_PRIVATE_IPV4} '${COREOS_PRIVATE_IPV4}' --ttl 30; \
     else \
-      etcdctl rm /announce/services/db/${COREOS_PRIVATE_IPV4}; \
+      etcdctl rm /db/${COREOS_PRIVATE_IPV4}; \
     fi; \
     sleep 20; \
   done"
-ExecStop=/usr/bin/etcdctl rm /announce/services/db/${COREOS_PRIVATE_IPV4}
+ExecStop=/usr/bin/etcdctl rm /db/${COREOS_PRIVATE_IPV4}
 
 [X-Fleet]
 X-ConditionMachineOf=db.service
