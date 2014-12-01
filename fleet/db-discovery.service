@@ -1,0 +1,27 @@
+[Unit]
+Description=Announce db service
+
+# Requirements
+Requires=etcd.service
+Requires=db.service
+
+# Dependency order and binding
+After=etcd.service
+After=db.service
+BindsTo=db.service
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart=/bin/sh -c "while true; do \
+    curl -f ${COREOS_PRIVATE_IPV4}; \
+    if [ $? -eq 0 ]; then \
+      etcdctl set /announce/services/db/${COREOS_PRIVATE_IPV4} '${COREOS_PRIVATE_IPV4}' --ttl 30; \
+    else \
+      etcdctl rm /announce/services/db/${COREOS_PRIVATE_IPV4}; \
+    fi; \
+    sleep 20; \
+  done"
+ExecStop=/usr/bin/etcdctl rm /announce/services/db/${COREOS_PRIVATE_IPV4}
+
+[X-Fleet]
+X-ConditionMachineOf=db.service

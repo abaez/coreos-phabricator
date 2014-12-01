@@ -1,0 +1,18 @@
+[Unit]
+Description=MySql db server service
+After=etcd.service
+After=docker.service
+Requires=db-discovery.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+KillMode=none
+ExecStartPre=-/usr/bin/docker kill db
+ExecStartPre=-/usr/bin/docker rm db
+ExecStart=/usr/bin/docker run --name db -v /home/core/data/db:/var/lib/mysql -e MYSQL_PASS=punimin@123 tutum/mysql
+ExecStop=/usr/bin/docker stop db
+
+[X-Fleet]
+X-Conflicts=db.service
+

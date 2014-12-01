@@ -1,0 +1,17 @@
+[Unit]
+Description=Phabricator main service
+After=db.service
+Requires=phabricator-discovery@%i.service db.service
+
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill phabricator%i
+ExecStartPre=-/usr/bin/docker rm phabricator%i
+ExecStart=/usr/bin/docker run --name phabricator%i -p ${COREOS_PUBLIC_IPV4}:22:22 -p ${COREOS_PUBLIC_IPV4}:%i:80 -v /home/core/data/repo:/var/repo -v /home/core/data/config:/config --link db:db --volumes-from db abaez/docker-phabricator
+ExecStop=/usr/bin/docker stop phabricator%i
+
+[X-Fleet]
+X-Conflicts=phabricator@*.service
+
