@@ -19,3 +19,13 @@ need adjustment to use on docker directly.
 *   [confd](http://www.confd.io/) configured with [nginx](http://nginx.org/)
 *   [coreos](https://coreos.com/)
 *   Mercurial or the git mirror on github.
+
+### INSTALL
+You need to first clone the repository from the git mirror or mercurial repo.
+
+    hg clone https://a_baez@bitbucket.org/a_baez/coreos-phabricator
+Afterwards, you will require build the docker container by running the
+following inside the source:
+
+    cd coreos-phabricator/
+    docker build -t abaez/coreos-phabricator .
