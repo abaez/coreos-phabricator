@@ -6,7 +6,7 @@ upstream {{getv "/sub" }} {
 
 server {
     access_log /var/log/nginx/access.log upstreamlog;
-    server_name {{getv "/sub"}}.puni.link; 
+    server_name {{getv "/sub"}}.localhost;
 
     location / {
         proxy_pass http://{{getv "/sub"}};
