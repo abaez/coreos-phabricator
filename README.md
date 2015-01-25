@@ -1,5 +1,5 @@
-# docker-phabricator
-A docker container for phabricator with only mercurial configuration by
+# coreos-phabricator
+A coreos docker container for phabricator with only mercurial configuration by
 [Alejandro Baez](https://twitter.com/a_baez)
 
 ---
@@ -13,3 +13,9 @@ git or any other preference.
 
 Since the container was built with use on coreos in mind, it may not work or
 need adjustment to use on docker directly.
+
+### DEPENDENCIES
+
+*   [confd](http://www.confd.io/) configured with [nginx](http://nginx.org/)
+*   [coreos](https://coreos.com/)
+*   Mercurial or the git mirror on github.
