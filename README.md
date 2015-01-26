@@ -53,3 +53,19 @@ Finally, load the fleet services for phabricator with your choice of port. Due
 keep in mind that the port for both the `phabricator-discovery` and
 `phabricator` should be the same.
     fleetctl load phabricator@<your port> phabricator-discovery@<your port>
+
+### USAGE
+Again, due to the nature of the configuration, it is recommended to only use
+confd for running the setup. You can however run phabricator from another tool.
+
+Anyway, to run phabricator all you will have to do is start the `phabricator`
+instance on fleet.
+
+    fleetctl start phabricator@<your port>
+The port will be the one you used for the load. The `start` command will run
+all the other services of phabricator, including the `db` services. The same
+for `stop` command on fleetctl.
+
+    fleetctl stop phabricator@<your port>
+Anyway, once your `phabricator` services are running, your confd setup should
+initialize it with no problem and your good to go.
