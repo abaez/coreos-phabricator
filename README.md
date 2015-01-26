@@ -29,3 +29,27 @@ following inside the source:
 
     cd coreos-phabricator/
     docker build -t abaez/coreos-phabricator .
+
+Lastly, add confd templates to confd setup mounted volume:
+
+    cp coreos-phabricator/confd <confd volume location>
+
+#### Fleet Setup
+Copy the fleet services to your fleet instance directory like so:
+
+    cp -R coreos-phabricator/fleet $HOME/fleet/instances/
+After copying, you need to change `line 12` where the `/var/repo` and `/config`
+location will be mounted on your setup.
+
+Next, submit the fleet services from where you copied and edited:
+
+    fleetctl submit $HOME/fleet/instances/*
+Furthermore, load the the `db` services for the database. You can use your own
+setup for this one if you already have a container you want to link to.
+However, the suppliled `db` service setup has 90% chance to work.
+
+    fleetctl load db*service
+Finally, load the fleet services for phabricator with your choice of port. Due
+keep in mind that the port for both the `phabricator-discovery` and
+`phabricator` should be the same.
+    fleetctl load phabricator@<your port> phabricator-discovery@<your port>
