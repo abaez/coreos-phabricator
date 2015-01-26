@@ -38,8 +38,12 @@ Lastly, add confd templates to confd setup mounted volume:
 Copy the fleet services to your fleet instance directory like so:
 
     cp -R coreos-phabricator/fleet $HOME/fleet/instances/
-After copying, you need to change `line 12` where the `/var/repo` and `/config`
+After copying, you need to change two files:
+
+1. `phabricator@.service`: `line 12`  where the `/var/repo` and `/config`
 location will be mounted on your setup.
+2. `db.service`: `line 13` where the `/var/lib/mysql` location will be mounted
+on your setup.
 
 Next, submit the fleet services from where you copied and edited:
 
@@ -52,6 +56,7 @@ However, the suppliled `db` service setup has 90% chance to work.
 Finally, load the fleet services for phabricator with your choice of port. Due
 keep in mind that the port for both the `phabricator-discovery` and
 `phabricator` should be the same.
+
     fleetctl load phabricator@<your port> phabricator-discovery@<your port>
 
 ### USAGE
